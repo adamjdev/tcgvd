@@ -1,5 +1,8 @@
 Ext.define('MyApp.view.main.Main', {
     extend: 'Ext.container.Viewport',
+    requires: [
+        'MyApp.view.main.HandList'
+    ],
 
     alias: 'viewmodel.main',
 
@@ -59,12 +62,30 @@ Ext.define('MyApp.view.main.Main', {
             },
             {
                 flex: 1,
-                id: 'chatArea',
-                ref: 'chatArea',
-                title: 'Chat area',
-                xtype: 'panel',
-                layout: 'fit',
-                html: 'chat'
+                layout: {
+                    type: 'hbox',
+                    align: 'stretch'
+                },
+                items: [
+                    {
+                        flex: 1,
+                        html: 'stats'
+                    },
+                    {
+                        flex: 1,
+                        xtype: 'handList',
+                        layout: 'fit',
+                    },
+                    {
+                        flex: 3,
+                        id: 'chatArea',
+                        ref: 'chatArea',
+                        xtype: 'panel',
+                        layout: 'fit',
+                        html: 'chat'
+                    }
+                ]
+
             }
         ]
     }]
