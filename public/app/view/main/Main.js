@@ -13,17 +13,7 @@ Ext.define('MyApp.view.main.Main', {
     },
     id: 'MyApp',
     listeners: {
-        render: function (view, evt) {
-            var el = view.getEl();
-            var keyConfig = {
-                key: 'dry',
-                ctrl: true
-            };
-            el.addKeyListener(keyConfig, function (charCode, keyEvt) {
-                keyEvt.preventDefault();
-                view.fireEvent('keypress', [view, charCode, keyEvt]);
-            });
-        },
+        render: 'onRender',
         // forward onto ViewController
         keypress: 'onKeyPress',
         scope: 'controller'
@@ -91,6 +81,7 @@ Ext.define('MyApp.view.main.Main', {
                     {
                         flex: 1,
                         xtype: 'handList',
+                        reference: 'handList',
                         layout: 'fit'
                     },
                     {

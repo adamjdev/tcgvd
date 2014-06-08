@@ -1,7 +1,6 @@
 Ext.define('MyApp.store.HandStore', {
-    extend: 'Ext.data.ArrayStore',
+    extend: 'MyApp.store.Card',
     alias: 'store.handStore',
-    model: 'MyApp.model.Card',
     data: []
 });
 
