@@ -1,16 +1,32 @@
 Ext.define('MyApp.view.main.Main', {
     extend: 'Ext.container.Viewport',
     requires: [
-        'MyApp.view.main.HandList'
+        'MyApp.view.main.HandList',
+        'MyApp.view.main.MainController'
     ],
 
     alias: 'viewmodel.main',
+    controller: 'main',
 
     data: {
         name: 'MyApp'
     },
-
     id: 'MyApp',
+    listeners: {
+        render: function (view, evt) {
+            var el = view.getEl();
+            var keyConfig = {
+                key: 'dry',
+                ctrl: true
+            };
+            el.addKeyListener(keyConfig, function (charCode, keyEvt) {
+                keyEvt.preventDefault();
+                view.fireEvent('keypress', [view, charCode, keyEvt]);
+            });
+        },
+        // forward onto ViewController
+        keypress: 'onKeyPress'
+    },
 
     items: [{
 
@@ -74,7 +90,7 @@ Ext.define('MyApp.view.main.Main', {
                     {
                         flex: 1,
                         xtype: 'handList',
-                        layout: 'fit',
+                        layout: 'fit'
                     },
                     {
                         flex: 3,
