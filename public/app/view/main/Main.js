@@ -25,7 +25,8 @@ Ext.define('MyApp.view.main.Main', {
             });
         },
         // forward onto ViewController
-        keypress: 'onKeyPress'
+        keypress: 'onKeyPress',
+        scope: 'controller'
     },
 
     items: [{
