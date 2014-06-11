@@ -85,6 +85,7 @@ Ext.define('MyApp.view.main.Main', {
                     {
                         flex: 1,
                         xtype: 'handList',
+                        id: 'handList',
                         reference: 'handList',
                         bind: '{yourHand}',
                         layout: 'fit'
