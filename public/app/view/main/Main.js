@@ -2,20 +2,24 @@ Ext.define('MyApp.view.main.Main', {
     extend: 'Ext.container.Viewport',
     requires: [
         'MyApp.view.main.HandList',
-        'MyApp.view.main.MainController'
+        'MyApp.view.main.MainController',
+        'MyApp.view.game.GameModel'
     ],
 
     alias: 'viewmodel.main',
     controller: 'main',
+    viewModel: {
+        type: 'game'
+    },
 
     data: {
         name: 'MyApp'
     },
-    id: 'MyApp',
+    id: 'gameContainer',
     listeners: {
         render: 'onRender',
         // forward onto ViewController
-        keypress: 'onKeyPress',
+        ctrlkeypress: 'onCtrlKeyPress',
         scope: 'controller'
     },
 
@@ -82,6 +86,7 @@ Ext.define('MyApp.view.main.Main', {
                         flex: 1,
                         xtype: 'handList',
                         reference: 'handList',
+                        bind: '{yourHand}',
                         layout: 'fit'
                     },
                     {

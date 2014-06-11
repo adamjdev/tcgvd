@@ -18,14 +18,16 @@ Ext.define('MyApp.view.main.MainController', {
         };
         el.addKeyListener(keyConfig, function (charCode, keyEvt) {
             keyEvt.preventDefault();
-            view.fireEvent('keypress', view, charCode, keyEvt);
+            view.fireEvent('ctrlkeypress', view, charCode);
         });
 
         this.newGame();
     },
 
-    onKeyPress: function () {
-        console.info('yes!', arguments);
+    onCtrlKeyPress: function (view, charCode) {
+        if (Ext.event.Event.D === charCode) {
+            this.draw();
+        }
     },
 
     clickTest: function () {
@@ -33,40 +35,37 @@ Ext.define('MyApp.view.main.MainController', {
     },
 
     newGame: function () {
-        var view = this.getView();
-        var handList = view.lookupReference('handList');
+        var allCardsStore = this.getAllCardsStore();
+        var dummyDeckArrayData = this.getDummyDeck();
 
-        var stores = this.createGameStores();
-        this.dummyDeck = stores.yourDeck;
-        handList.setStore(stores.yourHand);
-        this.cardStores.you.hand = stores.yourHand;
+        allCardsStore.loadRawData(dummyDeckArrayData);
     },
 
     draw: function () {
         var handStore = this.getYourHandStore();
-        var deck = this.dummyDeck;
+        var deck = this.getYourDeckStore();
+        // take the first card of the deck and move it to the hand.
+        var card = deck.getAt(0);
+        card.set('where', MyApp.model.Card.HAND);
+    },
+
+    getGameContainer: function () {
+        return Ext.getCmp('gameContainer');
+    },
+    getGameViewModel: function () {
+        return this.getGameContainer().getViewModel();
+    },
+
+    getAllCardsStore: function () {
+        return this.getGameViewModel().getStore('allCards');
     },
 
     getYourHandStore: function () {
-        return this.cardStores.you.hand;
+        return this.getGameViewModel().getStore('yourHand');
     },
 
-    createGameStores: function () {
-        var yourHand = Ext.create('MyApp.store.Card', {
-            data: []
-        });
-        var yourField = Ext.create('MyApp.store.Card', {
-            data: []
-        });
-        var yourDeck = Ext.create('MyApp.store.Card', {
-            data: this.getDummyDeck()
-        });
-        var ret = {
-            yourHand: yourHand,
-            yourField: yourField,
-            yourDeck: yourDeck
-        };
-        return ret;
+    getYourDeckStore: function () {
+        return this.getGameViewModel().getStore('yourDeck');
     },
 
     getDummyDeck: function () {
@@ -90,6 +89,6 @@ Ext.define('MyApp.view.main.MainController', {
             [14, 1234, true, 'lrg2g2rol', 'does this'],
             [15, 1234, true, 'li4rgol', 'does this'],
             [16, 1234, true, 'l4rg4gol', 'does this']
-        ]
+        ];
     }
 });
