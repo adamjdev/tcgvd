@@ -1,9 +1,11 @@
 Ext.define('MyApp.model.Card', {
     extend: 'Ext.data.Model',
 
-    DECK: -1,
-    FIELD: 0,
-    HAND: 1,
+    statics: {
+        DECK: -1,
+        FIELD: 0,
+        HAND: 1
+    },
 
     fields: [
         /**
